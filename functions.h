@@ -35,6 +35,7 @@ void initStones();
 void drawStones();
 
 ROV *myROV = NULL;
+Info *myInfo1 = NULL, *myInfo2 = NULL;
 vector<unsigned char> pressingKey;
 
 #include "models.hpp"

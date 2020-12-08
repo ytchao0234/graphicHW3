@@ -15,8 +15,8 @@ void display()
             glViewport( 0, 0, windowWidth, windowHeight );
             drawScene();
 
-            // glViewport( windowWidth/2, 0, windowWidth/2, windowHeight / 2);
-            // Info::showInfo();
+            glViewport( windowWidth - myInfo2->width, windowHeight - myInfo2->height, myInfo2->width, myInfo2->height );
+            myInfo2->showInfo();
             break;
 
         case OrthoY:
@@ -24,6 +24,9 @@ void display()
             makeProjection( OrthoY );
             glViewport( 0, 0, windowWidth, windowHeight );
             drawScene();
+
+            glViewport( windowWidth - myInfo2->width, windowHeight - myInfo2->height, myInfo2->width, myInfo2->height );
+            myInfo2->showInfo();
             break;
 
         case OrthoZ:
@@ -31,6 +34,9 @@ void display()
             makeProjection( OrthoZ );
             glViewport( 0, 0, windowWidth, windowHeight );
             drawScene();
+
+            glViewport( windowWidth - myInfo2->width, windowHeight - myInfo2->height, myInfo2->width, myInfo2->height );
+            myInfo2->showInfo();
             break;
 
         case FIRST_VIEW:
@@ -38,6 +44,9 @@ void display()
             makeProjection( FIRST_VIEW );
             glViewport( 0, 0, windowWidth, windowHeight );
             drawScene();
+
+            glViewport( windowWidth - myInfo2->width, windowHeight - myInfo2->height, myInfo2->width, myInfo2->height );
+            myInfo2->showInfo();
             break;
 
         case THIRD_VIEW:
@@ -45,6 +54,9 @@ void display()
             makeProjection( THIRD_VIEW );
             glViewport( 0, 0, windowWidth, windowHeight );
             drawScene();
+
+            glViewport( windowWidth - myInfo2->width, windowHeight - myInfo2->height, myInfo2->width, myInfo2->height );
+            myInfo2->showInfo();
             break;
 
         case GOD_VIEW:
@@ -52,6 +64,9 @@ void display()
             makeProjection( GOD_VIEW );
             glViewport( 0, 0, windowWidth, windowHeight );
             drawScene();
+
+            glViewport( windowWidth - myInfo2->width, windowHeight - myInfo2->height, myInfo2->width, myInfo2->height );
+            myInfo2->showInfo();
             break;
 
         case EACH_VIEW:
@@ -92,7 +107,8 @@ void display()
             glViewport( 0, 0, windowWidth / 2, windowHeight / 2 );
             drawScene();
 
-            
+            glViewport( windowWidth / 2, 0, windowWidth / 2, windowHeight / 2);
+            myInfo1->showInfo();
             break;
 
         default: break;
@@ -138,6 +154,16 @@ void initWindow()
     if( !myROV )
     {
         myROV = new ROV();
+    }
+
+    if( !myInfo1 )
+    {
+        myInfo1 = new Info();
+    }
+
+    if( !myInfo2 )
+    {
+        myInfo2 = new Info( (int)(INIT_W * 0.4), (int)(INIT_H * 0.2) );
     }
 
     initFloor();
