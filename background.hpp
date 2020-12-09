@@ -5,15 +5,17 @@ vector<vector<vector<double>>> floorColor( floorSize.first + 1,
                                            vector<vector<double>>( floorSize.second + 1 ));
 
 vector<vector<double>> fishPara(15, vector<double>(8));
+vector<vector<vector<double>>> fishBlock(15, vector<vector<double>>(3, vector<double>(8)));
 vector<vector<double>> stonePara(15, vector<double>(6));
+vector<vector<vector<double>>> stoneBlock(15, vector<vector<double>>(3, vector<double>(8)));
 vector<vector<double>> seaweedPara(20, vector<double>(6));
 
 void drawScene()
 {
     drawWCS();
     drawFloor();
-    // drawFishes();
-    // drawStones();
+    drawFishes();
+    drawStones();
     myROV->drawROV();
 }
 
@@ -107,14 +109,14 @@ void drawFloor()
 
 vector<double> randomPos()
 {
-    double rx = (rand() / (RAND_MAX + 1.0)) * 200;
+    double rx = (rand() / (RAND_MAX + 1.0)) * 1700;
     double ry = (rand() / (RAND_MAX + 1.0)) * 200 + 30;
-    double rz = (rand() / (RAND_MAX + 1.0)) * 200;
+    double rz = (rand() / (RAND_MAX + 1.0)) * 1700;
     
     vector<double> position;
 
-    if( rx > 100 ) rx = 100 - rx;
-    if( rz > 100 ) rz = 100 - rz;
+    if( rx > 850 ) rx = 850 - rx;
+    if( rz > 850 ) rz = 850 - rz;
 
     if( rx > 0 && rx < 30 ) rx += 30;
     else if( rx < 0 && rx > -30 ) rx -= 30;
@@ -129,6 +131,7 @@ vector<double> randomPos()
 
 void initFishes()
 {
+
     for( int i = 0; i < fishPara.size(); i++ )
     {
         vector<double> pos = randomPos();
@@ -137,11 +140,54 @@ void initFishes()
         fishPara[i] = { pos[0], pos[1], pos[2], 
                         (rand()/ (RAND_MAX + 1.0) * 360), (rand()/ (RAND_MAX + 1.0)) * 10.0 + 5.0,
                         color[0], color[1], color[2]};
+
+        fishBlock[i][0] = 
+        {
+            fishPara[i][0] + fishPara[i][4] * (0.7 * sin( fishPara[i][3] * PI / 180.0) + 0.125 * cos( fishPara[i][3] * PI / 180.0 )),
+            fishPara[i][0] + fishPara[i][4] * (0.7 * sin( fishPara[i][3] * PI / 180.0) - 0.125 * cos( fishPara[i][3] * PI / 180.0 )),
+            fishPara[i][0] + fishPara[i][4] * (-0.5 * sin( fishPara[i][3] * PI / 180.0) + 0.125 * cos( fishPara[i][3] * PI / 180.0 )),
+            fishPara[i][0] + fishPara[i][4] * (-0.5 * sin( fishPara[i][3] * PI / 180.0) - 0.125 * cos( fishPara[i][3] * PI / 180.0 )),
+            fishPara[i][0] + fishPara[i][4] * (0.7 * sin( fishPara[i][3] * PI / 180.0) + 0.125 * cos( fishPara[i][3] * PI / 180.0 )),
+            fishPara[i][0] + fishPara[i][4] * (0.7 * sin( fishPara[i][3] * PI / 180.0) - 0.125 * cos( fishPara[i][3] * PI / 180.0 )), 
+            fishPara[i][0] + fishPara[i][4] * (-0.5 * sin( fishPara[i][3] * PI / 180.0) + 0.125 * cos( fishPara[i][3] * PI / 180.0 )),
+            fishPara[i][0] + fishPara[i][4] * (-0.5 * sin( fishPara[i][3] * PI / 180.0) - 0.125 * cos( fishPara[i][3] * PI / 180.0 ))
+        };
+
+        fishBlock[i][1] = 
+        {
+            fishPara[i][1] + fishPara[i][4] * 0.3,
+            fishPara[i][1] + fishPara[i][4] * 0.3,
+            fishPara[i][1] + fishPara[i][4] * 0.3,
+            fishPara[i][1] + fishPara[i][4] * 0.3,
+            fishPara[i][1] + fishPara[i][4] * -0.3,
+            fishPara[i][1] + fishPara[i][4] * -0.3,
+            fishPara[i][1] + fishPara[i][4] * -0.3,
+            fishPara[i][1] + fishPara[i][4] * -0.3
+        };
+
+        fishBlock[i][2] = 
+        {
+            fishPara[i][2] + fishPara[i][4] * (0.7 * cos( fishPara[i][3] * PI / 180.0 ) - 0.125 * sin( fishPara[i][3] * PI / 180.0)),
+            fishPara[i][2] + fishPara[i][4] * (0.7 * cos( fishPara[i][3] * PI / 180.0 ) + 0.125 * sin( fishPara[i][3] * PI / 180.0)),
+            fishPara[i][2] + fishPara[i][4] * (-0.5 * cos( fishPara[i][3] * PI / 180.0 ) - 0.125 * sin( fishPara[i][3] * PI / 180.0)),
+            fishPara[i][2] + fishPara[i][4] * (-0.5 * cos( fishPara[i][3] * PI / 180.0 ) + 0.125 * sin( fishPara[i][3] * PI / 180.0)),
+            fishPara[i][2] + fishPara[i][4] * (0.7 * cos( fishPara[i][3] * PI / 180.0 ) - 0.125 * sin( fishPara[i][3] * PI / 180.0)),
+            fishPara[i][2] + fishPara[i][4] * (0.7 * cos( fishPara[i][3] * PI / 180.0 ) + 0.125 * sin( fishPara[i][3] * PI / 180.0)),
+            fishPara[i][2] + fishPara[i][4] * (-0.5 * cos( fishPara[i][3] * PI / 180.0 ) - 0.125 * sin( fishPara[i][3] * PI / 180.0)),
+            fishPara[i][2] + fishPara[i][4] * (-0.5 * cos( fishPara[i][3] * PI / 180.0 ) + 0.125 * sin( fishPara[i][3] * PI / 180.0))
+        };
     }
 }
 
 void drawFishes()
 {
+    if( myROV->grasping )
+    {
+        fishPara[myROV->graspingFish][0] = myROV->handPos[0];
+        fishPara[myROV->graspingFish][1] = myROV->handPos[1];
+        fishPara[myROV->graspingFish][2] = myROV->handPos[2];
+    }
+
     for( int i = 0; i < fishPara.size(); i++ )
     {
         drawFish( fishPara[i][0], 
@@ -152,7 +198,48 @@ void drawFishes()
                   fishPara[i][5],
                   fishPara[i][6],
                   fishPara[i][7] );
+
+        // if( myROV->toDrawBlock )
+        // {
+        //     glColor3f( 1.0, 1.0, 1.0 );
+
+        //     for( int j = 0; j < fishBlock[i][0].size(); j++ )
+        //     {
+        //         glPushMatrix();
+        //             glTranslatef( fishBlock[i][0][j], fishBlock[i][1][j], fishBlock[i][2][j]);
+        //             glutSolidCube( 1.0 );
+        //         glPopMatrix();
+        //     }
+        // }
     }
+}
+
+bool fishCollision()
+{
+    bool col = false;
+
+    for( int i = 0; i < fishPara.size(); i++ )
+    {
+        vector<double> pos = { fishPara[i][0], fishPara[i][1], fishPara[i][2] };
+        myROV -> collisionDetect( fishBlock[i], pos );
+
+        if( myROV->isCollision ) col = true;
+    }
+
+    return col;
+}
+
+bool graspFish()
+{
+    for( int i = 0; i < fishPara.size(); i++ )
+    {
+        if( myROV->collision( fishBlock[i], myROV->handBlockPoints ) ) 
+        {
+            myROV->graspingFish = i;
+            return true;
+        }  
+    }
+    return false;
 }
 
 void initStones()
@@ -164,6 +251,42 @@ void initStones()
         stonePara[i] = { pos[0], pos[2], 
                         (rand()/ (RAND_MAX + 1.0)) * 20 + 5,(rand()/ (RAND_MAX + 1.0)) * 20 + 5,(rand()/ (RAND_MAX + 1.0)) * 20 + 5,
                         (rand()/ (RAND_MAX + 1.0) * 0.1 + 0.1)};
+
+        stoneBlock[i][0] =
+        {
+            stonePara[i][0] + stonePara[i][2] * 3.23 / 2.0,
+            stonePara[i][0] - stonePara[i][2] * 3.23 / 2.0,
+            stonePara[i][0] + stonePara[i][2] * 3.23 / 2.0,
+            stonePara[i][0] - stonePara[i][2] * 3.23 / 2.0,
+            stonePara[i][0] + stonePara[i][2] * 3.23 / 2.0,
+            stonePara[i][0] - stonePara[i][2] * 3.23 / 2.0,
+            stonePara[i][0] + stonePara[i][2] * 3.23 / 2.0,
+            stonePara[i][0] - stonePara[i][2] * 3.23 / 2.0
+        };
+
+        stoneBlock[i][1] =
+        {
+            stonePara[i][3] * 3.23,
+            stonePara[i][3] * 3.23,
+            stonePara[i][3] * 3.23,
+            stonePara[i][3] * 3.23,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        };
+
+        stoneBlock[i][2] =
+        {
+            stonePara[i][1] + stonePara[i][4] * 3.23 / 2.0,
+            stonePara[i][1] + stonePara[i][4] * 3.23 / 2.0,
+            stonePara[i][1] - stonePara[i][4] * 3.23 / 2.0,
+            stonePara[i][1] - stonePara[i][4] * 3.23 / 2.0,
+            stonePara[i][1] + stonePara[i][4] * 3.23 / 2.0,
+            stonePara[i][1] + stonePara[i][4] * 3.23 / 2.0,
+            stonePara[i][1] - stonePara[i][4] * 3.23 / 2.0,
+            stonePara[i][1] - stonePara[i][4] * 3.23 / 2.0
+        };
     }
 }
 
@@ -177,5 +300,32 @@ void drawStones()
                                stonePara[i][3],
                                stonePara[i][4], 
                                stonePara[i][5]);
+
+        // if( myROV->toDrawBlock )
+        // {
+        //     glColor3f( 1.0, 1.0, 1.0 );
+        //     for( int j = 0; j < stoneBlock[i][0].size(); j++ )
+        //     {
+        //         glPushMatrix();
+        //             glTranslatef( stoneBlock[i][0][j], stoneBlock[i][1][j], stoneBlock[i][2][j] );
+        //             glutSolidCube( 1.0 );
+        //         glPopMatrix();
+        //     }
+        // }
     }
+}
+
+bool stoneCollision()
+{
+    bool col = false;
+
+    for( int i = 0; i < stonePara.size(); i++ )
+    {
+        vector<double> pos = { stonePara[i][0], stonePara[i][3] * 3.23 / 2.0, stonePara[i][1] };
+        myROV -> collisionDetect( stoneBlock[i], pos );
+
+        if( myROV->isCollision ) col = true;
+    }
+
+    return col;
 }

@@ -24,6 +24,10 @@ using namespace std;
 int windowWidth = 1200, windowHeight = 800;
 GLUquadric *sphere = NULL, *cylinder = NULL, *circleObj = NULL;
 
+double orthoNum = 300;
+double perspectiveEye = 90.0;
+double perspectiveNear = 1.5, perspectiveFar = 400.0;
+
 enum KEYBOARD
 {
     ESC = 27, SPACE = 32
@@ -36,4 +40,4 @@ enum PERSPECTIVE
     EACH_VIEW, MY_VIEW
 };
 
-int viewing = OrthoX;
+int viewing = MY_VIEW;

@@ -152,6 +152,67 @@ void Info::drawMap()
         glVertex2f( width / 2.0, ( height - lines * step ) / 2.0 );
     glEnd();
 
+    // x-axis
+    glColor3f( 0.0, 1.0, 1.0 );
+    glBegin( GL_LINES );
+        glVertex2f( width / 2.0, (height - lines * step) / 2.0 );
+        glVertex2f( width / 2.0, height - lines * step );
+    glEnd();
+
+    // x-axis
+    glColor3f( 1.0, 1.0, 0.0 );
+    glBegin( GL_LINES );
+        glVertex2f( lines * step / 2.0, (height - lines * step) / 2.0 );
+        glVertex2f( width / 2.0, (height - lines * step) / 2.0 );
+    glEnd();
+
+    // ROV
+    double x = (myROV->pos[0] - myROV->limitPos[0].first) / ( myROV->limitPos[0].second - myROV->limitPos[0].first );
+    double z = (myROV->pos[2] - myROV->limitPos[2].first) / ( myROV->limitPos[2].second - myROV->limitPos[2].first );
+
+    double facingx = (myROV->pos[0] + myROV->facing[0] * 50.0 - myROV->limitPos[0].first) / ( myROV->limitPos[0].second - myROV->limitPos[0].first );
+    double facingz = (myROV->pos[2] + myROV->facing[2] * 50.0 - myROV->limitPos[2].first) / ( myROV->limitPos[2].second - myROV->limitPos[2].first );
+
+    glColor3f( 1.0, 0.0, 0.0 );
+    glPointSize( 5.0 );
+    glBegin( GL_POINTS );
+        glVertex2d( (width - lines * step / 2.0) - (width - lines * step) * x, (height - lines * step) * z );
+    glEnd();
+
+    glColor3f( 1.0, 0.5, 0.0 );
+    glBegin( GL_LINES );
+        glVertex2d( (width - lines * step / 2.0) - (width - lines * step) * x, (height - lines * step) * z );
+        glVertex2d( (width - lines * step / 2.0) - (width - lines * step) * facingx, (height - lines * step) * facingz );
+    glEnd();
+
+    // fishes
+    glColor3f( 1.0, 0.0, 1.0 );
+    glPointSize( 5.0 );
+
+    for( auto fish : fishPara )
+    {
+        double x = (fish[0] - myROV->limitPos[0].first) / ( myROV->limitPos[0].second - myROV->limitPos[0].first );
+        double z = (fish[2] - myROV->limitPos[2].first) / ( myROV->limitPos[2].second - myROV->limitPos[2].first );
+
+        glBegin( GL_POINTS );
+            glVertex2d( (width - lines * step / 2.0) - (width - lines * step) * x, (height - lines * step) * z );
+        glEnd();
+    }
+
+    // stones
+    glColor3f( 0.3, 0.3, 0.3 );
+    glPointSize( 5.0 );
+
+    for( auto stone : stonePara )
+    {
+        double x = (stone[0] - myROV->limitPos[0].first) / ( myROV->limitPos[0].second - myROV->limitPos[0].first );
+        double z = (stone[1] - myROV->limitPos[2].first) / ( myROV->limitPos[2].second - myROV->limitPos[2].first );
+
+        glBegin( GL_POINTS );
+            glVertex2d( (width - lines * step / 2.0) - (width - lines * step) * x, (height - lines * step) * z );
+        glEnd();
+    }
+
     //background
     glColor3f( 0.0, 0.0, 0.0 );
 

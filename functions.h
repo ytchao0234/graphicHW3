@@ -17,6 +17,8 @@ void mouseCtrl( int, int, int, int );
 
 void changeLookAt( int );
 void makeProjection( int );
+void zoomIn( bool = true );
+void zoomOut( bool = true );
 
 void drawTrapezoidalCube();
 void drawPyramid( bool );
@@ -31,8 +33,11 @@ void initFloor();
 void drawFloor();
 void initFishes();
 void drawFishes();
+bool fishCollision();
+bool graspFish();
 void initStones();
 void drawStones();
+bool stoneCollision();
 
 ROV *myROV = NULL;
 Info *myInfo1 = NULL, *myInfo2 = NULL;
@@ -40,8 +45,8 @@ vector<unsigned char> pressingKey;
 
 #include "models.hpp"
 #include "ROV.hpp"
+#include "background.hpp"
 #include "Info.hpp"
 #include "control.hpp"
 #include "view.hpp"
-#include "background.hpp"
 #include "render.hpp"

@@ -178,43 +178,64 @@ void initWindow()
 
 void pressing()
 {
+    myROV->isCollision = fishCollision() || stoneCollision();
+
+    if( myROV->isCollision )
+    {
+        myROV->speed[0] = -myROV->speed[0];
+        myROV->speed[1] = -myROV->speed[1];
+        myROV->speed[2] = -myROV->speed[2];
+
+        if( myROV->speed[0] == myROV->speed[1] == myROV->speed[2] == 0 )
+        {
+            myROV->pos[0] += myROV->collisionVector[0];
+            myROV->pos[1] += myROV->collisionVector[1];
+            myROV->pos[2] += myROV->collisionVector[2];
+        }
+    }
+    
     unsigned char keyValue;
 
     myROV->boundAcc();
 
     for( auto key: pressingKey )
     {
+        if( myROV->isCollision )
+        {
+            break;
+        }
+
         keyValue = tolower( key );
 
         switch( keyValue )
         {
             case 'w':
-                myROV->acceleration[0] = 0.02;
+                myROV->acceleration[0] = 0.05;
                 myROV->isMoving[0] = true;
                 break;
                 
             case 's':
-                myROV->acceleration[0] = -0.02;
+                myROV->acceleration[0] = -0.05;
                 myROV->isMoving[0] = true;
                 break;
 
             case 'a':
-                myROV->acceleration[1] = 0.02;
+                myROV->acceleration[1] = 0.05;
                 myROV->isMoving[1] = true;
                 break;
                 
             case 'd':
-                myROV->acceleration[1] = -0.02;
+                myROV->acceleration[1] = -0.05;
                 myROV->isMoving[1] = true;
                 break;
 
             case 'i':
-                myROV->acceleration[2] = 0.02;
+                myROV->acceleration[2] = 0.05;
                 myROV->isMoving[2] = true;
                 break;
                 
             case 'k':
-                myROV->acceleration[2] = -0.02;
+                myROV->acceleration[2] = -0.05;
                 myROV->isMoving[2] = true;
                 break;
                 
@@ -240,8 +261,20 @@ void pressing()
                 myROV->grasping = true;
                 break;
             
-            case 'e':
-                myROV->grasping = false;
+            case 'z':
+                zoomIn();
+                break;
+            
+            case 'x':
+                zoomOut();
+                break;
+                
+            case 'c':
+                zoomIn( false );
+                break;
+            
+            case 'v':
+                zoomOut( false );
                 break;
         }
     }
@@ -251,5 +284,6 @@ void pressing()
         myROV->isMoving = { false, false, false };
     }
 
+    cout << myROV->graspingFish << endl;
     myROV->moving();
 }

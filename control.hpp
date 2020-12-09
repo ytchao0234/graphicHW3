@@ -1,6 +1,6 @@
 void keyCtrl( unsigned char keyValue, int x, int y )
 {
-    switch( keyValue )
+    switch( tolower(keyValue) )
     {
         case ESC:
             exit(0);
@@ -9,6 +9,25 @@ void keyCtrl( unsigned char keyValue, int x, int y )
         case SPACE:
             delete myROV;
             myROV = new ROV();
+            break;
+            
+        case 'b':
+            if( myROV->toDrawBlock )
+                myROV->toDrawBlock = false;
+            else
+                myROV->toDrawBlock = true;
+            break;
+
+        case 'q':
+            if( graspFish() )
+            {
+                myROV->grasping = true;
+            }
+            pressingKey.emplace_back( keyValue );
+            break;
+            
+        case 'e':
+            myROV->grasping = false;
             break;
 
         case '1':
@@ -54,7 +73,7 @@ void keyUpCtrl( unsigned char keyValue, int posX, int posY )
     
     if( it != pressingKey.end() )
     {
-        if( tolower(*it) == 'q' ) myROV->grasping = false;
+        if( tolower(*it) == 'q' && !myROV->grasping ) myROV->grasping = false;
         pressingKey.erase( it );
     }
 }

@@ -104,41 +104,6 @@ void drawFish( double posX, double posY, double posZ,
                double angle, double size, 
                double colorR, double colorG, double colorB )
 {
-    glColor3f( 1.0, 1.0, 1.0 );
-    glPushMatrix();
-        glTranslatef( posX + size * (0.7 * sin( angle * PI / 180.0) + 0.125 * cos( angle * PI / 180.0 )), posY + size * 0.3, posZ + size * (0.7 * cos( angle * PI / 180.0 ) - 0.125 * sin( angle * PI / 180.0)));
-        glutSolidCube( 1.0 );
-    glPopMatrix();
-    glPushMatrix();
-        glTranslatef( posX + size * (0.7 * sin( angle * PI / 180.0) - 0.125 * cos( angle * PI / 180.0 )), posY + size * 0.3, posZ + size * (0.7 * cos( angle * PI / 180.0 ) + 0.125 * sin( angle * PI / 180.0)));
-        glutSolidCube( 1.0 );
-    glPopMatrix();
-    glPushMatrix();
-        glTranslatef( posX + size * (-0.5 * sin( angle * PI / 180.0) + 0.125 * cos( angle * PI / 180.0 )), posY + size * 0.3, posZ + size * (-0.5 * cos( angle * PI / 180.0 ) - 0.125 * sin( angle * PI / 180.0)));
-        glutSolidCube( 1.0 );
-    glPopMatrix();
-    glPushMatrix();
-        glTranslatef( posX + size * (-0.5 * sin( angle * PI / 180.0) - 0.125 * cos( angle * PI / 180.0 )), posY + size * 0.3, posZ + size * (-0.5 * cos( angle * PI / 180.0 ) + 0.125 * sin( angle * PI / 180.0)));
-        glutSolidCube( 1.0 );
-    glPopMatrix();
-
-    glPushMatrix();
-        glTranslatef( posX + size * (0.7 * sin( angle * PI / 180.0) + 0.125 * cos( angle * PI / 180.0 )), posY + size * -0.3, posZ + size * (0.7 * cos( angle * PI / 180.0 ) - 0.125 * sin( angle * PI / 180.0)));
-        glutSolidCube( 1.0 );
-    glPopMatrix();
-    glPushMatrix();
-        glTranslatef( posX + size * (0.7 * sin( angle * PI / 180.0) - 0.125 * cos( angle * PI / 180.0 )), posY + size * -0.3, posZ + size * (0.7 * cos( angle * PI / 180.0 ) + 0.125 * sin( angle * PI / 180.0)));
-        glutSolidCube( 1.0 );
-    glPopMatrix();
-    glPushMatrix();
-        glTranslatef( posX + size * (-0.5 * sin( angle * PI / 180.0) + 0.125 * cos( angle * PI / 180.0 )), posY + size * -0.3, posZ + size * (-0.5 * cos( angle * PI / 180.0 ) - 0.125 * sin( angle * PI / 180.0)));
-        glutSolidCube( 1.0 );
-    glPopMatrix();
-    glPushMatrix();
-        glTranslatef( posX + size * (-0.5 * sin( angle * PI / 180.0) - 0.125 * cos( angle * PI / 180.0 )), posY + size * -0.3, posZ + size * (-0.5 * cos( angle * PI / 180.0 ) + 0.125 * sin( angle * PI / 180.0)));
-        glutSolidCube( 1.0 );
-    glPopMatrix();
-
     glColor3f( colorR, colorG, colorB );
 
     glPushMatrix();
@@ -194,7 +159,7 @@ void drawStone( double posX, double posZ, double sizeX, double sizeY, double siz
     glColor3f( color, color, color );
 
     glPushMatrix();
-        glTranslatef( posX, sizeY / 2.0, posZ );
+        glTranslatef( posX, sizeY * 3.23 / 2.0, posZ );
         glScalef( sizeX, sizeY, sizeZ );
         glutSolidDodecahedron();
     glPopMatrix();

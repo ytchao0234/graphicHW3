@@ -25,9 +25,9 @@ void changeLookAt( int viewMode )
                        myROV->pos[1] + myROV->facing[1] * 20.0,
                        myROV->pos[2] + myROV->facing[2] * 20.0,
 
-                       myROV->pos[0] + myROV->facing[0] * 150.0, // look position
-                       myROV->pos[1] + myROV->facing[1] * 150.0,
-                       myROV->pos[2] + myROV->facing[2] * 150.0,
+                       myROV->pos[0] + myROV->facing[0] * 21.0, // look position
+                       myROV->pos[1] + myROV->facing[1] * 21.0,
+                       myROV->pos[2] + myROV->facing[2] * 21.0,
 
                        0.0, 1.0, 0.0 ); // v up
             break;
@@ -62,21 +62,49 @@ void makeProjection( int viewMode )
     {
         if( w > h )
         {
-            glOrtho(-300.0, 300.0,
-                    -300.0 * h/w, 300.0 * h/w,
-                    -300.0, 300.0);
+            glOrtho(-orthoNum, orthoNum,
+                    -orthoNum * h/w, orthoNum * h/w,
+                    -orthoNum, orthoNum);
         }
         else
         {
-            glOrtho(-300.0 * w/h, 300.0 * w/h,
-                    -300.0, 300.0, 
-                    -300.0, 300.0);
+            glOrtho(-orthoNum * w/h, orthoNum * w/h,
+                    -orthoNum, orthoNum, 
+                    -orthoNum, orthoNum);
         }
     }
     else // FIRST_VIEW, THIRD_VIEW, GOD_VIEW
     {
-        gluPerspective( 90.0, w/h, 1.5, 400.0);
+        gluPerspective( perspectiveEye, w/h, perspectiveNear, perspectiveFar);
     }
 
     glMatrixMode( GL_MODELVIEW );
+}
+
+void zoomIn( bool forOrho )
+{
+    if( forOrho )
+    {
+        orthoNum -= 10.0;
+        if( orthoNum < 300.0 ) orthoNum = 300.0;
+    }
+    else
+    {
+        perspectiveEye -= 1.0;
+        if( perspectiveEye < 45.0 ) perspectiveEye = 45.0;
+    }
+}
+
+void zoomOut( bool forOrho )
+{
+    if( forOrho )
+    {
+        orthoNum += 10.0;
+        if( orthoNum > 700.0 ) orthoNum = 700.0;
+    }
+    else
+    {
+        perspectiveEye += 1.0;
+        if( perspectiveEye > 90.0 ) perspectiveEye = 90.0;
+    }
 }
